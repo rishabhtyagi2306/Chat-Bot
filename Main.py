@@ -5,7 +5,6 @@ import json
 import nltk
 import numpy as np
 
-
 from nltk.stem.lancaster import LancasterStemmer
 stemmer = LancasterStemmer()
 
@@ -68,6 +67,5 @@ net = tflearn.regression(net)
 
 model = tflearn.DNN(net)
 
-model.fit(training, output, n_epoch = 10, batch_size = 8, show_metric = True)
+model.fit(training, output, n_epoch = 1000, batch_size = 8, show_metric = True)
 model.save("model.tflearn")
-    
