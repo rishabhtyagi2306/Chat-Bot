@@ -5,6 +5,8 @@ import json
 import nltk
 import numpy as np
 import pickle
+from tkinter import *
+import pyttsx3
 
 from nltk.stem.lancaster import LancasterStemmer
 
@@ -12,6 +14,20 @@ stemmer = LancasterStemmer()
 
 with open("intents.json") as file:
     data = json.load(file)
+
+root = Tk()
+root.title("My Chat bot")
+root.geometry("800x500")
+
+
+def talk(my_entry):
+    engine = pyttsx3.init()
+    voices = engine.getProperty('voices')
+    engine.setProperty('voice', voices[1].id)
+    engine.say(my_entry)
+    engine.runAndWait()
+    # my_entry.delete(0, END)
+
 
 try:
     with open("data.pickle", "rb") as f:
@@ -107,9 +123,13 @@ def chat():
                 if tg['tag'] == tag:
                     responses = tg['responses']
 
-            print(random.choice(responses))
+            my_entry = random.choice(responses)
+            print(my_entry)
+            talk(my_entry)
         else:
-            print("Please some different question !")
+            print("Please ask some different question !")
+            talk("Please ask some different question !")
 
 
 chat()
+#root.mainloop()
