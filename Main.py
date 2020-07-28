@@ -1,3 +1,4 @@
+import threading
 import tensorflow
 import tflearn
 import random
@@ -7,6 +8,7 @@ import numpy as np
 import pickle
 from tkinter import *
 import pyttsx3
+import speech_recognition as sr
 
 from nltk.stem.lancaster import LancasterStemmer
 
@@ -18,6 +20,20 @@ with open("intents.json") as file:
 root = Tk()
 root.title("My Chat bot")
 root.geometry("800x500")
+
+
+def get_audio():
+    r = sr.Recognizer()
+    with sr.Microphone() as source:
+        audio = r.listen(source)
+        said = ""
+        try:
+            said = r.recognize_google(audio)
+            print(said)
+        except Exception as e:
+            print("Exception: " + str(e))
+
+    return said
 
 
 def talk(my_entry):
@@ -132,4 +148,4 @@ def chat():
 
 
 chat()
-#root.mainloop()
+# root.mainloop()
